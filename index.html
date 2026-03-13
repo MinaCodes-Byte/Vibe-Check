@@ -7,7 +7,7 @@
 	     <link rel="icon" href="Favicon.png" type="image/png">
     <style>
         :root {
-            --bg-color: #f1f2f6; /* Default soft grey before clicking */
+            --bg-color: #BDB8D9; /* Default soft grey before clicking */
             --text-color: #2d3436;
             --accent: #a29bfe;
         }
@@ -60,8 +60,24 @@
             z-index: 9999;
             transition: transform 0.1s ease-out, background 0.5s;
         }
+		  /* Add to end of <style> */
+        .glass-container {
+            animation: fadeIn 1.5s ease-in;
+        }
 
-        #player-wrapper { margin-top: 25px; min-height: 80px; }
+        @keyframes fadeIn {
+           from { opacity: 0; transform: translateY(20px); }
+           to { opacity: 1; transform: translateY(0); }
+        }
+
+		#player-wrapper { margin-top: 25px; min-height: 80px; }
+		
+        .active-vibe { 
+           transform: scale(1.1); 
+           filter: brightness(1.2); 
+           border: 2px solid white; 
+        }
+
     </style>
 </head>
 <body id="main-body">
@@ -88,48 +104,59 @@
             const title = document.getElementById('vibe-title');
             const playerWrapper = document.getElementById('player-wrapper');
 
-            // 1. Define your playlist links here
-            // Replace these placeholder URLs with your actual Spotify Embed links!
-            const links = {
-                chill: "https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ",
+        // 1. Loading state
+        playerWrapper.innerHTML = `<p style="color: var(--text-color);">Loading your vibes...</p>`;
+
+        // 2. Active button logic
+        document.querySelectorAll('button').forEach(btn => btn.classList.remove('active-vibe'));
+        event.currentTarget.classList.add('active-vibe');
+
+        // 3. Define your actual Spotify links here
+        const links = {
+            chill: "https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ",
                 energy: "https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO",
                 midnight: "https://open.spotify.com/embed/playlist/55kXFRgaWu8Vu0ko7CfbXB",
-            };
+        };
 
-            const randomLink = links[vibe];
+        const randomLink = links[vibe];
 
-            // 2. Color and Title update logic
-            if (vibe === 'chill') {
-                document.documentElement.style.setProperty('--bg-color', '#9DE3DF');
-                document.documentElement.style.setProperty('--text-color', '#2d3436');
-                document.documentElement.style.setProperty('--accent', '#00b894');
-                title.innerText = "Current Vibe: Chill 🌿";
-            } else if (vibe === 'energy') {
-                document.documentElement.style.setProperty('--bg-color', '#fff3e0');
-                document.documentElement.style.setProperty('--text-color', '#2d3436');
-                document.documentElement.style.setProperty('--accent', '#ff9800');
-                title.innerText = "Current Vibe: Energy ⚡";
-            } else if (vibe === 'midnight') {
-                document.documentElement.style.setProperty('--bg-color', '#2c3e50');
-                document.documentElement.style.setProperty('--text-color', '#ecf0f1');
-                document.documentElement.style.setProperty('--accent', '#9b59b6');
-                title.innerText = "Current Vibe: Midnight 🌙";
-            }
+        // 4. Color and Title update logic
+        if (vibe === 'chill') {
+            document.documentElement.style.setProperty('--bg-color', '#9DE3DF');
+            document.documentElement.style.setProperty('--text-color', '#2d3436');
+            document.documentElement.style.setProperty('--accent', '#00b894');
+            title.innerText = "Current Vibe: Chill 🌿";
+        } else if (vibe === 'energy') {
+            document.documentElement.style.setProperty('--bg-color', '#fff3e0');
+            document.documentElement.style.setProperty('--text-color', '#2d3436');
+            document.documentElement.style.setProperty('--accent', '#ff9800');
+            title.innerText = "Current Vibe: Energy ⚡";
+        } else if (vibe === 'midnight') {
+            document.documentElement.style.setProperty('--bg-color', '#2c3e50');
+            document.documentElement.style.setProperty('--text-color', '#ecf0f1');
+            document.documentElement.style.setProperty('--accent', '#9b59b6');
+            title.innerText = "Current Vibe: Midnight 🌙";
+        }
 
-            // 3. Update the player
-            playerWrapper.innerHTML = `<iframe style="border-radius:12px" src="${randomLink}" width="100%" height="352" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
-     }
+        // 5. Update the player
+        playerWrapper.innerHTML = `<iframe style="border-radius:12px" src="${randomLink}" width="100%" height="352" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+        }
 
-    // Cursor logic
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        cursor.style.transform = "translate(-50%, -50%)";
-    });
-</script>
+     // Cursor logic
+       const cursor = document.getElementById('cursor');
+       document.addEventListener('mousemove', (e) => {
+           cursor.style.left = e.clientX + 'px';
+           cursor.style.top = e.clientY + 'px';
+           cursor.style.transform = "translate(-50%, -50%)";
+        });
+
+     //Add hover effect for buttons
+       document.querySelectorAll('button').forEach(btn => {
+           btn.addEventListener('mouseover', () => cursor.style.transform = "translate(-50%, -50%) scale(2)");
+           btn.addEventListener('mouseleave', () => cursor.style.transform = "translate(-50%, -50%) scale(1)");
+        });
+   </script>
 </body>
 
 </html>
-
 
