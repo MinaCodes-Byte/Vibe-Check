@@ -88,22 +88,25 @@
             const title = document.getElementById('vibe-title');
             const playerWrapper = document.getElementById('player-wrapper');
 
+            // 1. Define your playlist links here
+            // Replace these placeholder URLs with your actual Spotify Embed links!
             const links = {
-                // ADD YOUR CHILL LINKS HERE:
-                chill: ["https://open.spotify.com/embed/album/2ktEp7PBrRQvO50nn62pCy?utm_source=generator", "https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ?utm_source=generator"],
-                energy: ["https://open.spotify.com/embed/playlist/37i9dQZF1DX73EtbU4jEcn?utm_source=generator"],
-                midnight: ["https://open.spotify.com/embed/playlist/6DF5Jeon4NwCwt6ltLJfRe?utm_source=generator", "https://open.spotify.com/embed/playlist/55kXFRgaWu8Vu0ko7CfbXB?utm_source=generator"]
+                chill: "https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ",
+                energy: "https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO",
+                midnight: "https://open.spotify.com/embed/playlist/37i9dQZF1DX6VdMW310C7j"
             };
 
-            const moodLinks = links[vibe];
-            const randomLink = moodLinks[Math.floor(Math.random() * moodLinks.length)];
+            const randomLink = links[vibe];
 
+            // 2. Color and Title update logic
             if (vibe === 'chill') {
                 document.documentElement.style.setProperty('--bg-color', '#e0f2f1');
+                document.documentElement.style.setProperty('--text-color', '#2d3436');
                 document.documentElement.style.setProperty('--accent', '#00b894');
                 title.innerText = "Current Vibe: Chill 🌿";
             } else if (vibe === 'energy') {
                 document.documentElement.style.setProperty('--bg-color', '#fff3e0');
+                document.documentElement.style.setProperty('--text-color', '#2d3436');
                 document.documentElement.style.setProperty('--accent', '#ff9800');
                 title.innerText = "Current Vibe: Energy ⚡";
             } else if (vibe === 'midnight') {
@@ -113,16 +116,18 @@
                 title.innerText = "Current Vibe: Midnight 🌙";
             }
 
-            // Notice height is now 80!
+            // 3. Update the player
             playerWrapper.innerHTML = `<iframe style="border-radius:12px" src="${randomLink}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
-        }
+     }
 
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.transform = "translate(-50%, -50%)";
-        });
-    </script>
+    // Cursor logic
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        cursor.style.transform = "translate(-50%, -50%)";
+    });
+</script>
 </body>
+
 </html>
