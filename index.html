@@ -93,14 +93,14 @@
             const links = {
                 chill: "https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ",
                 energy: "https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO",
-                midnight: "https://open.spotify.com/embed/playlist/37i9dQZF1DX6VdMW310C7j"
+                midnight: "https://open.spotify.com/embed/playlist/55kXFRgaWu8Vu0ko7CfbXB",
             };
 
             const randomLink = links[vibe];
 
             // 2. Color and Title update logic
             if (vibe === 'chill') {
-                document.documentElement.style.setProperty('--bg-color', '#e0f2f1');
+                document.documentElement.style.setProperty('--bg-color', '#9DE3DF');
                 document.documentElement.style.setProperty('--text-color', '#2d3436');
                 document.documentElement.style.setProperty('--accent', '#00b894');
                 title.innerText = "Current Vibe: Chill 🌿";
@@ -131,4 +131,5 @@
 </body>
 
 </html>
+
 
