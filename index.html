@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeCheck 2026</title>
+	     <link rel="icon" href="Favicon.png" type="image/png">
+    <style>
+        :root {
+            --bg-color: #f1f2f6; /* Default soft grey before clicking */
+            --text-color: #2d3436;
+            --accent: #a29bfe;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: all 0.8s ease;
+            cursor: none;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        button {
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.3s;
+            background: var(--accent);
+            color: white;
+        }
+
+        button:hover { transform: scale(1.1); }
+
+        #cursor {
+            width: 20px; height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out, background 0.5s;
+        }
+
+        #player-wrapper { margin-top: 25px; min-height: 80px; }
+    </style>
+</head>
+<body id="main-body">
+
+    <div id="cursor"></div>
+
+    <div class="glass-container">
+        <h1 id="vibe-title">Select Your Vibe</h1>
+        <p>Your dashboard will transform to match your mood.</p>
+        
+        <div class="button-group">
+            <button onclick="changeVibe('chill')">Chill 🌿</button>
+            <button onclick="changeVibe('energy')">Energy ⚡</button>
+            <button onclick="changeVibe('midnight')">Midnight 🌙</button>
+        </div>
+
+        <div id="player-wrapper">
+            <p>Ready when you are...</p>
+        </div>
+    </div>
+
+    <script>
+        function changeVibe(vibe) {
+            const title = document.getElementById('vibe-title');
+            const playerWrapper = document.getElementById('player-wrapper');
+
+            const links = {
+                // ADD YOUR CHILL LINKS HERE:
+                chill: ["https://open.spotify.com/embed/album/2ktEp7PBrRQvO50nn62pCy?utm_source=generator", "https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ?utm_source=generator"],
+                energy: ["https://open.spotify.com/embed/playlist/37i9dQZF1DX73EtbU4jEcn?utm_source=generator"],
+                midnight: ["https://open.spotify.com/embed/playlist/6DF5Jeon4NwCwt6ltLJfRe?utm_source=generator", "https://open.spotify.com/embed/playlist/55kXFRgaWu8Vu0ko7CfbXB?utm_source=generator"]
+            };
+
+            const moodLinks = links[vibe];
+            const randomLink = moodLinks[Math.floor(Math.random() * moodLinks.length)];
+
+            if (vibe === 'chill') {
+                document.documentElement.style.setProperty('--bg-color', '#e0f2f1');
+                document.documentElement.style.setProperty('--accent', '#00b894');
+                title.innerText = "Current Vibe: Chill 🌿";
+            } else if (vibe === 'energy') {
+                document.documentElement.style.setProperty('--bg-color', '#fff3e0');
+                document.documentElement.style.setProperty('--accent', '#ff9800');
+                title.innerText = "Current Vibe: Energy ⚡";
+            } else if (vibe === 'midnight') {
+                document.documentElement.style.setProperty('--bg-color', '#2c3e50');
+                document.documentElement.style.setProperty('--text-color', '#ecf0f1');
+                document.documentElement.style.setProperty('--accent', '#9b59b6');
+                title.innerText = "Current Vibe: Midnight 🌙";
+            }
+
+            // Notice height is now 80!
+            playerWrapper.innerHTML = `<iframe style="border-radius:12px" src="${randomLink}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+        }
+
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.transform = "translate(-50%, -50%)";
+        });
+    </script>
+</body>
+</html>
